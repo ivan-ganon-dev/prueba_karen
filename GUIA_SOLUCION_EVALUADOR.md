@@ -1,7 +1,5 @@
 # Guía de Solución para el Evaluador (`ai_chat_app`)
 
-> **Importante:** Este archivo está fuera de la carpeta `ai_chat_app/` para que puedas compartir únicamente la carpeta `ai_chat_app` con la candidata sin entregarle las respuestas.
-
 ---
 
 ## Paso 0: Configuración de la API en el código (`script.js`)
@@ -14,32 +12,30 @@ const API_KEY = 'AIzaSy...';   // Su API Key real
 
 ---
 
-## Resumen de los 5 errores y cómo solucionarlos
+## Resumen de las 5 tareas y cómo resolverlas
 
-### 1. El botón "Enviar" no responde al clic (Error de CSS)
-- **Archivo:** `ai_chat_app/styles.css` (alrededor de la línea 226)
-- **Síntoma:** Al abrir el widget del chat haciendo clic en el logotipo inferior izquierdo e intentar hacer clic en el botón **Enviar**, no ocurre nada.
-- **Causa:** La clase `.send-btn` tiene la propiedad `pointer-events: none;`.
-- **Solución:** Eliminar la línea `pointer-events: none;` (o cambiarla a `pointer-events: auto;`).
+### 1. Clonar el repositorio por SSH (Git)
+- **Qué se evalúa:** Que la candidata sepa configurar una llave SSH en GitHub y clonar un repositorio usando SSH.
+- **Comportamiento esperado:** Clona el proyecto sin problemas usando la URL SSH (no HTTPS).
+- **Solución:**
 
-```css
-/* Antes */
-.send-btn {
-  /* ... */
-  pointer-events: none;
-}
+```bash
+# Verificar la conexión SSH con GitHub
+ssh -T git@github.com
+# Respuesta esperada: Hi <usuario>! You've successfully authenticated...
 
-/* Después */
-.send-btn {
-  /* ... */
-  /* pointer-events eliminado */
-}
+# Clonar el repositorio
+git clone git@github.com:ivan-ganon-dev/prueba_karen.git
 ```
+
+- **Errores comunes:**
+  - `Permission denied (publickey)`: la llave pública (`.pub`) no está agregada en su cuenta de GitHub o no está cargada en el agente (`ssh-add`).
+  - `Repository not found`: si el repositorio es privado, la candidata no ha sido agregada como colaboradora.
 
 ---
 
 ### 2. La página se recarga al enviar el formulario (Error de Eventos en JS)
-- **Archivo:** `ai_chat_app/script.js` (alrededor de la línea 137)
+- **Archivo:** `ai_chat_app/script.js` (alrededor de la línea 144)
 - **Síntoma:** Al presionar `Enter` en la caja de texto o hacer clic en **Enviar**, la página se recarga, el chat se cierra y se borra la conversación.
 - **Causa:** En el evento `submit` de `chatForm`, falta detener el comportamiento por defecto del navegador.
 - **Solución:** Agregar `event.preventDefault();` al inicio del listener.
@@ -59,7 +55,7 @@ chatForm.addEventListener('submit', async (event) => {
 ---
 
 ### 3. Error en consola: `Cannot read properties of null (reading 'value')` (Error de DOM en JS)
-- **Archivo:** `ai_chat_app/script.js` (línea 22) vs `ai_chat_app/index.html` (línea 41)
+- **Archivo:** `ai_chat_app/script.js` (línea 22) vs `ai_chat_app/index.html` (línea 42)
 - **Síntoma:** Al intentar enviar un mensaje, la consola muestra `Uncaught (in promise) TypeError: Cannot read properties of null (reading 'value')`.
 - **Causa:** En `index.html` el `<input>` tiene el atributo `id="user-input"`, pero en `script.js` se está buscando como `document.getElementById('mensaje-usuario')`.
 - **Solución:** Cambiar el selector en `script.js` a `'user-input'` (o cambiar el `id` en el HTML para que ambos coincidan).
@@ -75,12 +71,12 @@ const userInput = document.getElementById('user-input');
 ---
 
 ### 4. Error al extraer el texto de la respuesta JSON de la API (Error de lógica en JS)
-- **Archivo:** `ai_chat_app/script.js` (línea 94 para Gemini / línea 133 para OpenAI)
+- **Archivo:** `ai_chat_app/script.js` (línea 100 para Gemini / línea 138 para OpenAI)
 - **Síntoma:** La petición a la API responde con éxito (`200 OK`) y se imprime el JSON en consola (`console.log`), pero la burbuja del chat muestra un error: `Cannot read properties of undefined (reading 'parts')` (en Gemini) o `Cannot read properties of undefined (reading 'content')` (en OpenAI).
 - **Causa:** Tanto `candidates` y `parts` (en Gemini) como `choices` (en OpenAI) son **arreglos (`Array`)**, y el código intenta acceder a sus propiedades como si fueran objetos directos sin usar el índice `[0]`.
 - **Solución (según la API que ella haya configurado en `API_PROVIDER`):**
 
-**Si usa Google Gemini (línea 94):**
+**Si usa Google Gemini (línea 100):**
 ```javascript
 /* Antes */
 return data.candidates.content.parts.text;
@@ -89,7 +85,7 @@ return data.candidates.content.parts.text;
 return data.candidates[0].content.parts[0].text;
 ```
 
-**Si usa OpenAI / ChatGPT (línea 133):**
+**Si usa OpenAI / ChatGPT (línea 138):**
 ```javascript
 /* Antes */
 return data.choices.message.content;
@@ -101,7 +97,7 @@ return data.choices[0].message.content;
 ---
 
 ### 5. El área de mensajes no permite hacer scroll cuando hay varios mensajes (Error de CSS)
-- **Archivo:** `ai_chat_app/styles.css` (alrededor de la línea 152)
+- **Archivo:** `ai_chat_app/styles.css` (alrededor de la línea 156)
 - **Síntoma:** Cuando se envían varios mensajes y la conversación supera la altura del widget, los mensajes nuevos quedan ocultos abajo y no se puede desplazar hacia abajo con la rueda del ratón.
 - **Causa:** La clase `.chat-messages` tiene `overflow-y: hidden;`.
 - **Solución:** Cambiar `overflow-y: hidden;` por `overflow-y: auto;`.

@@ -231,9 +231,6 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
-  /* PISTA CSS: El botón se ve en pantalla, pero algo en esta propiedad
-     está bloqueando los clics del ratón sobre él. */
-  pointer-events: none;
 }
 
 .send-btn:hover {
