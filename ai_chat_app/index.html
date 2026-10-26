@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ganon - Asistente Virtual IA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Ventana flotante del chat (oculta al inicio hasta dar clic en el logo) -->
+  <div id="chat-widget" class="app-container hidden">
+    <header class="chat-header">
+      <div class="brand-container">
+        <img
+          src="https://tienda.ganon.com/sca-dev-2023-1-0/img/logo/logo-ganon.png"
+          alt="Logo Ganon"
+          class="brand-logo"
+        />
+        <div class="header-info">
+          <h1>Asistente Virtual</h1>
+          <span class="status-badge">
+            <span class="status-dot"></span> En línea
+          </span>
+        </div>
+      </div>
+      <button type="button" id="close-chat-btn" class="close-chat-btn" title="Cerrar chat">
+        &times;
+      </button>
+    </header>
+
+    <!-- Área de mensajes del chat -->
+    <main id="chat-messages" class="chat-messages">
+      <div class="message bot-message">
+        <div class="message-content">¡Hola! Soy el asistente virtual de Ganon. ¿En qué puedo ayudarte hoy?</div>
+      </div>
+    </main>
+
+    <!-- Formulario para enviar mensajes -->
+    <form id="chat-form" class="chat-input-area">
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Escribe un mensaje aquí..."
+        autocomplete="off"
+        required
+      />
+      <button type="submit" id="send-btn" class="send-btn">
+        Enviar
+      </button>
+    </form>
+  </div>
+
+  <!-- Botón flotante con el logotipo en la esquina inferior izquierda -->
+  <button type="button" id="chat-toggle-btn" class="chat-launcher-btn" title="Abrir chat de asistencia">
+    <img
+      src="https://tienda.ganon.com/sca-dev-2023-1-0/img/logo/logo-ganon.png"
+      alt="Abrir Chat Ganon"
+      class="launcher-logo"
+    />
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>

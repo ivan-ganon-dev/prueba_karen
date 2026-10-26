@@ -1,0 +1,246 @@
+/* =========================================================
+   Estilos generales de AI Chat App
+   ========================================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
+  color: #1e293b;
+  height: 100vh;
+}
+
+/* =========================================================
+   Botón flotante con logo en la esquina inferior izquierda
+   ========================================================= */
+.chat-launcher-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  background-color: #ffffff;
+  border: 2px solid #00558c;
+  border-radius: 50px;
+  padding: 10px 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1000;
+}
+
+.chat-launcher-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.22);
+}
+
+.launcher-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* =========================================================
+   Card / Ventana compacta del Chat
+   ========================================================= */
+.app-container {
+  position: fixed;
+  bottom: 92px;
+  left: 24px;
+  width: 370px;
+  max-width: calc(100vw - 48px);
+  height: 500px;
+  max-height: calc(100vh - 120px);
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  z-index: 1000;
+}
+
+.app-container.hidden {
+  display: none;
+}
+
+/* =========================================================
+   Encabezado de la Card con Logo Ganon
+   ========================================================= */
+.chat-header {
+  background-color: #ffffff;
+  padding: 12px 16px;
+  border-bottom: 3px solid #00558c;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #cbd5e1;
+  padding-left: 12px;
+}
+
+.header-info h1 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.close-chat-btn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.close-chat-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+/* =========================================================
+   Contenedor de mensajes
+   ========================================================= */
+.chat-messages {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f8fafc;
+  /* PISTA CSS: Cuando la conversación crece, el contenedor debería
+     permitir desplazarse verticalmente (scroll) en vez de ocultar el contenido. */
+  overflow-y: hidden;
+}
+
+.message {
+  display: flex;
+  max-width: 85%;
+  line-height: 1.4;
+  font-size: 0.9rem;
+}
+
+.message-content {
+  padding: 10px 14px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.user-message {
+  align-self: flex-end;
+}
+
+.user-message .message-content {
+  background-color: #00558c;
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+}
+
+.bot-message {
+  align-self: flex-start;
+}
+
+.bot-message .message-content {
+  background-color: #e2e8f0;
+  color: #1e293b;
+  border-bottom-left-radius: 2px;
+}
+
+.error-message .message-content {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #f87171;
+}
+
+/* =========================================================
+   Área de entrada y botón de envío
+   ========================================================= */
+.chat-input-area {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input-area input:focus {
+  border-color: #00558c;
+}
+
+.send-btn {
+  padding: 10px 16px;
+  background-color: #00558c;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  /* PISTA CSS: El botón se ve en pantalla, pero algo en esta propiedad
+     está bloqueando los clics del ratón sobre él. */
+  pointer-events: none;
+}
+
+.send-btn:hover {
+  background-color: #003f68;
+}
+
+.send-btn:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
